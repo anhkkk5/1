@@ -14,7 +14,14 @@ const AdminDashboard = () => {
     status: "open",
   });
   const [editPosition, setEditPosition] = useState(null);
+  const [newAccount, setNewAccount] = useState({
+    username: "",
+    password: "",
+    email: "",
+    role: "",
+  });
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     fetchPositions();
@@ -34,7 +41,7 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleCreate = async (e) => {
+  const handleCreatePosition = async (e) => {
     e.preventDefault();
     try {
       await axios.post(
@@ -53,8 +60,10 @@ const AdminDashboard = () => {
         status: "open",
       });
       setError("");
+      setSuccess("Position created successfully");
     } catch (err) {
       setError(err.response?.data || "Failed to create position");
+      setSuccess("");
     }
   };
 
@@ -62,7 +71,7 @@ const AdminDashboard = () => {
     setEditPosition(position);
   };
 
-  const handleUpdate = async (e) => {
+  const handleUpdatePosition = async (e) => {
     e.preventDefault();
     try {
       await axios.put(
@@ -75,8 +84,10 @@ const AdminDashboard = () => {
       fetchPositions();
       setEditPosition(null);
       setError("");
+      setSuccess("Position updated successfully");
     } catch (err) {
       setError(err.response?.data || "Failed to update position");
+      setSuccess("");
     }
   };
 
@@ -90,8 +101,31 @@ const AdminDashboard = () => {
       );
       fetchPositions();
       setError("");
+      setSuccess("Position deleted successfully");
     } catch (err) {
       setError("Failed to delete position");
+      setSuccess("");
+    }
+  };
+
+  const handleCreateAccount = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://localhost:7166/api/auth/register",
+        newAccount,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setNewAccount({ username: "", password: "", email: "", role: "" });
+      setError("");
+      setSuccess(
+        `Account created successfully with ID: ${response.data.accountId}`
+      );
+    } catch (err) {
+      setError(err.response?.data || "Failed to create account");
+      setSuccess("");
     }
   };
 
@@ -99,10 +133,71 @@ const AdminDashboard = () => {
     <div className="container mt-4">
       <h2>Admin Dashboard</h2>
       {error && <div className="alert alert-danger">{error}</div>}
+      {success && <div className="alert alert-success">{success}</div>}
+
+      {/* Form Tạo Tài Khoản */}
+      <h3>Create Account</h3>
+      <form onSubmit={handleCreateAccount}>
+        <div className="mb-3">
+          <label>Username</label>
+          <input
+            type="text"
+            className="form-control"
+            value={newAccount.username}
+            onChange={(e) =>
+              setNewAccount({ ...newAccount, username: e.target.value })
+            }
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label>Password</label>
+          <input
+            type="password"
+            className="form-control"
+            value={newAccount.password}
+            onChange={(e) =>
+              setNewAccount({ ...newAccount, password: e.target.value })
+            }
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label>Email</label>
+          <input
+            type="email"
+            className="form-control"
+            value={newAccount.email}
+            onChange={(e) =>
+              setNewAccount({ ...newAccount, email: e.target.value })
+            }
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label>Role</label>
+          <select
+            className="form-control"
+            value={newAccount.role}
+            onChange={(e) =>
+              setNewAccount({ ...newAccount, role: e.target.value })
+            }
+            required
+          >
+            <option value="">Select a role</option>
+            <option value="admin">Admin</option>
+            <option value="company">Company</option>
+            <option value="student">Student</option>
+          </select>
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Create Account
+        </button>
+      </form>
 
       {/* Form Tạo Vị Trí */}
-      <h3>Create Position</h3>
-      <form onSubmit={handleCreate}>
+      <h3 className="mt-4">Create Position</h3>
+      <form onSubmit={handleCreatePosition}>
         <div className="mb-3">
           <label>Company ID</label>
           <input
@@ -152,7 +247,7 @@ const AdminDashboard = () => {
           />
         </div>
         <button type="submit" className="btn btn-primary">
-          Create
+          Create Position
         </button>
       </form>
 
@@ -160,7 +255,7 @@ const AdminDashboard = () => {
       {editPosition && (
         <>
           <h3 className="mt-4">Edit Position</h3>
-          <form onSubmit={handleUpdate}>
+          <form onSubmit={handleUpdatePosition}>
             <div className="mb-3">
               <label>Company ID</label>
               <input
