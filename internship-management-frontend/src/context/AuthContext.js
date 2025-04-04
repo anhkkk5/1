@@ -33,6 +33,12 @@ export const AuthProvider = ({ children }) => {
       const { token } = res.data;
       setToken(token);
       localStorage.setItem("token", token);
+
+      // Gọi API để lấy thông tin user ngay sau khi đăng nhập
+      const userRes = await axios.get("https://localhost:7166/api/auth/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUser(userRes.data);
     } catch (error) {
       throw new Error("Login failed");
     }
