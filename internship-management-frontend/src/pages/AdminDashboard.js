@@ -69,7 +69,7 @@ const AdminDashboard = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAccounts(res.data);
-      setSuccess("Accounts fetched successfully");
+      setSuccess("");
       setError("");
     } catch (err) {
       console.error("Failed to fetch accounts", err);
@@ -451,7 +451,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h2>Admin Dashboard</h2>
+      <h2></h2>
       {error && <div className="alert alert-danger">{error}</div>}
       {success && <div className="alert alert-success">{success}</div>}
 
@@ -461,7 +461,7 @@ const AdminDashboard = () => {
             className={`nav-link ${currentTab === "accounts" ? "active" : ""}`}
             onClick={() => setCurrentTab("accounts")}
           >
-            Quản lí tài khoản
+            Danh sách tài khoản
           </button>
         </li>
         <li className="nav-item">
@@ -469,7 +469,7 @@ const AdminDashboard = () => {
             className={`nav-link ${currentTab === "students" ? "active" : ""}`}
             onClick={() => setCurrentTab("students")}
           >
-            Quản lí sinh viên
+            Danh sách sinh viên
           </button>
         </li>
         <li className="nav-item">
@@ -477,7 +477,7 @@ const AdminDashboard = () => {
             className={`nav-link ${currentTab === "companies" ? "active" : ""}`}
             onClick={() => setCurrentTab("companies")}
           >
-            Quản lí doanh nghiệp
+            Danh sách doanh nghiệp
           </button>
         </li>
         <li className="nav-item">
@@ -510,6 +510,19 @@ const AdminDashboard = () => {
           </button>
         </li>
       </ul>
+
+      <div class="profile-card">
+        <img
+          alt="Profile picture of a person with a beard and glasses"
+          height="100"
+          src="https://storage.googleapis.com/a1aa/image/5oVf63CuO7IZDG5LXUETKhCtMk1kli3baxd-2YrctpM.jpg"
+          width="100"
+        />
+        <div class="info">
+          <h2>Redwan husein</h2>
+          <p>UI / UX Designer &amp; UX Writer</p>
+        </div>
+      </div>
 
       <div className="tab-content">
         {currentTab === "accounts" && (

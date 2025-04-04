@@ -210,7 +210,7 @@ const StudentDashboard = () => {
             className={`nav-link ${currentTab === "profile" ? "active" : ""}`}
             onClick={() => setCurrentTab("profile")}
           >
-            Cập nhật hồ sơ
+            Hồ sơ sinh viên
           </button>
         </li>
         <li className="nav-item">
@@ -233,6 +233,19 @@ const StudentDashboard = () => {
           </button>
         </li>
       </ul>
+
+      <div class="profile-card">
+        <img
+          alt="Profile picture of a person with a beard and glasses"
+          height="100"
+          src="https://storage.googleapis.com/a1aa/image/5oVf63CuO7IZDG5LXUETKhCtMk1kli3baxd-2YrctpM.jpg"
+          width="100"
+        />
+        <div class="info">
+          <h2>Redwan husein</h2>
+          <p>UI / UX Designer &amp; UX Writer</p>
+        </div>
+      </div>
 
       <div className="tab-content">
         {currentTab === "profile" && (
