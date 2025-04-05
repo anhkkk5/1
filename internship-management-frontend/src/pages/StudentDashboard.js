@@ -243,7 +243,7 @@ const StudentDashboard = () => {
         />
         <div class="info">
           <h2>Redwan husein</h2>
-          <p>UI / UX Designer &amp; UX Writer</p>
+          <p>Sinh viên</p>
         </div>
       </div>
 

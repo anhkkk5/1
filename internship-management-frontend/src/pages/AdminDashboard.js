@@ -519,8 +519,8 @@ const AdminDashboard = () => {
           width="100"
         />
         <div class="info">
-          <h2>Redwan husein</h2>
-          <p>UI / UX Designer &amp; UX Writer</p>
+          <h2>Nhóm 1</h2>
+          <p>Admin</p>
         </div>
       </div>
 
